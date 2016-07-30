@@ -17,6 +17,7 @@ namespace Crate
 
         public Job(int doors,int posts, int panels, int urinals)
         {
+            //prevents exception when there are no panels/post/doors/urinals
             if (doors == 0)
             {
                 _doors = new Door[1];
@@ -201,6 +202,7 @@ namespace Crate
             }
         }
 
+        //used for debugging
         public void Display()
         {
             foreach(Door i in _doors)
@@ -264,9 +266,11 @@ namespace Crate
             int row = 0;
             double rowWidth = 0;
 
+            //prevents exception when there are no post
             if (_posts[0].Width == 0)
                 return 0;
             
+            //sets row width
                 if (_posts[0].ZeroSight)
                 {
                     rowWidth = 60;
@@ -279,6 +283,9 @@ namespace Crate
 
             //sort Post array by width, greatest to lease
             List <int> postWidthHolder = SortPostWidth();
+
+            // this adds up the post till it reaches row width or no more post
+            // if it reaches row width, it makes a new row and repeats till no more post
             while(postWidthHolder.Count != 0)
             {
                 int widthHolder = 0;
@@ -311,7 +318,7 @@ namespace Crate
             //return the amount of rows from pylasters.
             return row;
         }
-
+        //sorts the array of post by width greatest to least
         private List <int> SortPostWidth()
         {
             List <int> holder = new List<int>();
@@ -327,11 +334,12 @@ namespace Crate
 
         public int ArrangePanels()
         {
-            //sorts the panels by width from greatest to least
-            List<int> holder = new List<int>();
-
+            //checks if there are panels
             if (_panels[0].Width == 0)
                 return 0;
+
+            //sorts the panels by width from greatest to least
+            List<int> holder = new List<int>();
 
             for (int i = 0; i < _panels.Length; i++)
             {
@@ -389,7 +397,7 @@ namespace Crate
                 rowWidth = 59;
             }
 
-            //sort Post array by width, greatest to lease
+            //sort urinal array by width, greatest to lease, same algorithm as ArrangePost()
             List<int> urinalWidthHolder = SortUrinalWidth();
             while (urinalWidthHolder.Count != 0)
             {
@@ -421,7 +429,7 @@ namespace Crate
                 row += 1;
             }
 
-            //return the amount of rows from pylasters.
+            //return the amount of rows from urinal.
             return row;
         }
 
@@ -440,7 +448,7 @@ namespace Crate
 
         public double CrateHeight()
         {
-            
+            //variables
             double foam = 0;
             double height = 0;
             double rowPost = 0;
@@ -464,6 +472,7 @@ namespace Crate
             if (_urinals[0] != null)
                 rowArrangeUrinals = ArrangeUrinals();
 
+            //get the thickness
             if(_posts != null || _posts[0] != null)
             {
                 rowPost = rowArrangePost * _posts[0].Thickness;
@@ -480,6 +489,7 @@ namespace Crate
             {
                 rowUrinal = rowArrangeUrinals * _urinals[0].Thickness;
             }
+            //add up thickness
             foam = (rowArrangeUrinals + rowArrangePost + rowArrangePanels + rowArrangeDoors) * FOAM_THICKNESS;
             height = EXTRA + rowDoor + rowPanel + rowPost + rowUrinal + foam;
             /*used for debugging

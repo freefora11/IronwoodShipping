@@ -86,11 +86,11 @@ namespace Crate
             set
             {  _zeroSight = value;
 
-                if(_material == "phenolic")
+                if(_material == "Phenolic")
                 {
                     _thickness = 1;
                 }
-                else if (value || _typeOfDoor == "louver")
+                else if (value || _typeOfDoor == "Louver")
                 {
                     _thickness = 1.25;
                 }

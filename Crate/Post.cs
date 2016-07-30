@@ -12,9 +12,12 @@
             {
                 _zeroSight = value;
 
-                if (_material == "phenolic")
+                if (_material == "Phenolic")
                 {
-                    _thickness = 1;
+                    _thickness = 0.875;
+                } else if(_material == "Phenolic" && ZeroSight == true)
+                {
+                    _thickness = 1.0;
                 }
                 else
                 {

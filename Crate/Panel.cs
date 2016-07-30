@@ -5,7 +5,7 @@
 
         public void ChangeThickness()
         {
-            if(_material == "phenolic")
+            if(_material == "Phenolic")
             {
                 _thickness = 0.5;
             }

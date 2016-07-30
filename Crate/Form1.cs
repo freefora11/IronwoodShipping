@@ -17,13 +17,13 @@ namespace Crate
 {
     public partial class Form1 : Form
     {
-        //arrays with amount 
+        //arrays with amount of each
         TextBox[] arrAmountTextBoxPanel;
         TextBox[] arrAmountTextBoxDoor;
         TextBox[] arrAmountTextBoxPost;
         TextBox[] arrAmountTextBoxUrinal;
 
-        //arrays with widths
+        //arrays with widths of each
         TextBox[] arrWidthTextBoxPanel;
         TextBox[] arrWidthTextBoxDoor;
         TextBox[] arrWidthTextBoxPost;
@@ -46,15 +46,18 @@ namespace Crate
 
         }
 
-        //when panel enter button is clicked, create fields in panel
+        //when panel enter button is clicked, create fields in a panel
         private void buttonEnter_Click(object sender, EventArgs e)
         {
+            //prevents panel from over expanding
             int totalPieces = Convert.ToInt32(numericUpDownTotal.Text);
             if (totalPieces > 6)
             {
                 totalPieces = 6;
             }
+            //cleans up panel
             tableLayoutPanel1.Controls.Clear();
+
             //adds the label for each panel counting from 1
             Label[] arrLabel = new Label[totalPieces];
             TextBox[] arrHeightTextBoxPanel = new TextBox[totalPieces];
@@ -113,7 +116,7 @@ namespace Crate
 
         }
 
-        //when Door Enter button is clicked, add controls to panel
+        //when Door Enter button is clicked, add controls to a panel
         private void buttonEnter2_Click(object sender, EventArgs e)
         {
             int totalPieces = Convert.ToInt32(numericUpDownTotal2.Text);
@@ -302,9 +305,10 @@ namespace Crate
 
         }
 
+        //when Calculate Button clicked, process all data and output to a docx file
         private void buttonCalculate_Click(object sender, EventArgs e)
         {
-
+            //variables
             double crateHeight = 0;
             double crateLength = 0;
             double crateWidth = 0;
@@ -378,8 +382,8 @@ namespace Crate
                 job.setHeightPieces(doorHeight);
                 job.setHeightPost(postHeight);
                 job.setHeightUrinal(urinalHeight);
-                job.setMaterial(material);
                 job.setZeroSight(zeroSight);
+                job.setMaterial(material);
                 job.ChangeTypeDoor(doorType);
 
                 //get width of panels
@@ -544,9 +548,12 @@ namespace Crate
 
                     
                     document.Save();
+                    //if no problems, let user know with label
                     labelSuccess.Visible = true;
                     labelSuccess.ForeColor = Color.Green;
                     labelSuccess.Text = "Process Successful!";
+
+                    //open up in text editor
                     try
                     {
                         Process.Start("Winword.exe", file);
@@ -562,7 +569,7 @@ namespace Crate
             }
             catch (Exception)
             {
-
+                //if fails, let user know
                 labelSuccess.Visible = true;
                 labelSuccess.Text = "Process Unsuccessful!";
                 labelSuccess.ForeColor = Color.Red;
